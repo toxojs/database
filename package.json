@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@toxo/cache": "^1.0.1",
-    "@toxo/ioc": "^1.0.0",
+    "@toxo/ioc": "^1.1.1",
     "@toxo/memory": "^1.0.1",
     "mongodb": "^5.5.0"
   }

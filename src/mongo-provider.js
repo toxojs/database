@@ -1,7 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb');
+const { ioc } = require('@toxo/ioc');
 const { Collection } = require('./collection');
 
 const idField = '_id';
+const logger = ioc.get('logger');
 
 const isMongoId = (str) => {
   let oid;
@@ -133,7 +135,7 @@ class MongodbProvider {
         .toArray();
       return this.convertOut(items);
     } catch (err) {
-      console.log(err);
+      logger.error(err);
       throw err;
     }
   }
@@ -282,13 +284,13 @@ class MongodbProvider {
 
   // eslint-disable-next-line class-methods-use-this
   updateByBatches(name, items, batchSize = 100) {
-    console.log(name, items, batchSize);
+    logger.log(name, items, batchSize);
     throw new Error('not implemented');
   }
 
   // eslint-disable-next-line class-methods-use-this
   removeByIdByBatches(name, ids, batchSize = 100) {
-    console.log(name, ids, batchSize);
+    logger.log(name, ids, batchSize);
     throw new Error('not implemented');
   }
 

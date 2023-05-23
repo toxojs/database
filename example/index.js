@@ -3,7 +3,8 @@ const { ioc, factory } = require('@toxo/ioc');
 const { MongodbProvider, DatabaseManager } = require('../src');
 const config = require('./config.json');
 
-const logEventFn = (eventName) => console.log(`****${eventName}`);
+const logEventFn = (eventName) => logger.log(`****${eventName}`);
+const logger = ioc.get('logger');
 
 async function configureDatabase() {
   factory.register(MongodbProvider);
@@ -21,7 +22,7 @@ async function wait(seconds) {
 }
 
 async function orchestrate() {
-  console.log(`Starting Primary process with PID ${process.pid}`);
+  logger.log(`Starting Primary process with PID ${process.pid}`);
   for (let i = 0; i < 4; i += 1) {
     cluster.fork();
     // eslint-disable-next-line no-await-in-loop
@@ -30,22 +31,22 @@ async function orchestrate() {
 }
 
 async function serve() {
-  console.log(`Worker with PID ${process.pid} started.`);
+  logger.log(`Worker with PID ${process.pid} started.`);
   await configureDatabase();
   const dbManager = ioc.get('databaseManager');
   const collection = dbManager.getMainCollection('tenants');
   let item = await collection.findById('61925b2574ad1ebeff6c179c');
-  console.log(item.tenantId);
+  logger.log(item.tenantId);
   item = await collection.findById('61925b2574ad1ebeff6c179c');
-  console.log(item.tenantId);
+  logger.log(item.tenantId);
   item = await collection.findOne({
     tenantId: '49ba9f38-9749-4885-a86c-170afff9a5b7',
   });
-  console.log(item.tenantId);
+  logger.log(item.tenantId);
   item = await collection.findOne({
     tenantId: '73832b67-1b07-41b3-8ee1-36694b0af628',
   });
-  console.log(item.tenantId);
+  logger.log(item.tenantId);
 }
 
 (async () => {
