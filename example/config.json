@@ -1,0 +1,14 @@
+{
+  "databases": {
+    "main": {
+      "provider": "MongodbProvider",
+      "url": "mongodb://127.0.0.1:27017/test_tenants",
+      "collections": {
+        "tenants": {
+          "type": "shared",
+          "indexFields": ["tenantId"]
+        }
+      }
+    }
+  }
+}
