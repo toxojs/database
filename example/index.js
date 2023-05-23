@@ -3,8 +3,8 @@ const { ioc, factory } = require('@toxo/ioc');
 const { MongodbProvider, DatabaseManager } = require('../src');
 const config = require('./config.json');
 
-const logEventFn = (eventName) => logger.log(`****${eventName}`);
 const logger = ioc.get('logger');
+const logEventFn = (eventName) => logger.log(`****${eventName}`);
 
 async function configureDatabase() {
   factory.register(MongodbProvider);

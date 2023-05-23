@@ -6,6 +6,7 @@ const database = require('./database');
 const mongodbProvider = require('./mongo-provider');
 const sharedCollection = require('./shared-collection');
 const databaseManager = require('./database-manager');
+const baseProvider = require('./base-provider');
 
 module.exports = {
   ...baseCachedCollection,
@@ -16,4 +17,5 @@ module.exports = {
   ...mongodbProvider,
   ...sharedCollection,
   ...databaseManager,
+  ...baseProvider,
 };

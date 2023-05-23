@@ -1,6 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const { ioc } = require('@toxo/ioc');
-const { Collection } = require('./collection');
+const { BaseProvider } = require('./base-provider');
 
 const idField = '_id';
 const logger = ioc.get('logger');
@@ -21,10 +21,9 @@ function processIds(condition) {
     : condition;
 }
 
-class MongodbProvider {
+class MongodbProvider extends BaseProvider {
   constructor(settings = {}) {
-    this.collections = new Map();
-    this.settings = settings;
+    super(settings);
     this.createClient();
   }
 
@@ -88,18 +87,6 @@ class MongodbProvider {
       return input;
     }
     return srcInput;
-  }
-
-  getCollection(name) {
-    if (!this.collections.has(name)) {
-      const collection = new Collection({ db: this, name });
-      this.collections.set(name, collection);
-    }
-    return this.collections.get(name);
-  }
-
-  setCollection(name, collection) {
-    this.collections.set(name, collection);
   }
 
   getMongoCollection(name) {
