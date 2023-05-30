@@ -18,9 +18,9 @@ class BaseCachedCollection extends BaseCollection {
     }
     if (!result) {
       result = await this.dbCollection.findOne(condition, projection);
-    }
-    if (result && !projection) {
-      await this.putIntoCache(result);
+      if (result && !projection) {
+        await this.putIntoCache(result);
+      }
     }
     return result;
   }
@@ -37,9 +37,9 @@ class BaseCachedCollection extends BaseCollection {
     }
     if (!item) {
       item = await this.dbCollection.findById(id, projection);
-    }
-    if (item && !projection) {
-      await this.putIntoCache(item);
+      if (item && !projection) {
+        await this.putIntoCache(item);
+      }
     }
     return item;
   }
