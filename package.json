@@ -1,6 +1,6 @@
 {
   "name": "@toxo/database",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -37,7 +37,7 @@
   "dependencies": {
     "@toxo/cache": "^1.0.1",
     "@toxo/ioc": "^1.1.1",
-    "@toxo/memory": "^1.0.1",
+    "@toxo/memory": "^1.0.2",
     "mongodb": "^5.5.0"
   }
 }
