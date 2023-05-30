@@ -1,11 +1,10 @@
-const { ioc } = require('@toxo/ioc');
-const { sharedMemory } = require('@toxo/memory');
+const { getSharedMemory } = require('@toxo/memory');
 const { BaseCachedCollection } = require('./base-cached-collection');
 
 class SharedCollection extends BaseCachedCollection {
   constructor(settings) {
     super(settings);
-    this.memory = ioc.get('sharedMemory') || sharedMemory;
+    this.memory = getSharedMemory();
   }
 
   addData(settings) {
