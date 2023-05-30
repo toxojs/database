@@ -1,5 +1,6 @@
 const cluster = require('cluster');
 const { ioc, factory } = require('@toxo/ioc');
+const { getSharedMemory } = require('@toxo/memory');
 const { MongodbProvider, DatabaseManager } = require('../src');
 const config = require('./config.json');
 
@@ -11,7 +12,7 @@ async function configureDatabase() {
   const dbManager = await DatabaseManager.createFrom(config.databases);
   ioc.register('databaseManager', dbManager);
   const collection = dbManager.getMainCollection('tenants');
-  collection.addHook('beforeAll', logEventFn, -1);
+  collection.addHookTo('beforeAll', logEventFn, 'Collection');
   await dbManager.start();
 }
 
@@ -22,6 +23,7 @@ async function wait(seconds) {
 }
 
 async function orchestrate() {
+  getSharedMemory();
   logger.log(`Starting Primary process with PID ${process.pid}`);
   for (let i = 0; i < 4; i += 1) {
     cluster.fork();

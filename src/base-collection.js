@@ -34,6 +34,25 @@ class BaseCollection {
     collection.hooks.get(event).push(hook);
   }
 
+  getCollectionOfType(className) {
+    let current = this;
+    while (current && current.constructor.name !== className) {
+      current = current.dbCollection;
+    }
+    return current;
+  }
+
+  addHookTo(event, hook, clazz) {
+    const className = typeof clazz === 'string' ? clazz : clazz.name;
+    const collection = this.getCollectionOfType(className);
+    if (collection) {
+      if (!collection.hooks.has(event)) {
+        collection.hooks.set(event, []);
+      }
+      collection.hooks.get(event).push(hook);
+    }
+  }
+
   async callHook(hookName, eventName, data) {
     let newData = { ...data };
     const hooks = this.hooks.get(hookName) || [];
